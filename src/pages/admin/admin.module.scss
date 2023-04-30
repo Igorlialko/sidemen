@@ -1,0 +1,64 @@
+.header {
+  display: flex;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+button.add {
+  border: 1px solid #43af43;
+  color: #43af43;
+  margin-bottom: 16px;
+
+  &:hover,
+  &:active,
+  &:focus-visible {
+    color: white;
+    background: #2f772f;
+  }
+}
+
+button.delete {
+  border: 1px solid #af2d2d;
+  color: #880000;
+
+  &:hover,
+  &:active,
+  &:focus-visible {
+    color: white;
+    background: #c40000;
+  }
+}
+button.disable{
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.5;
+}
+.title{
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  //padding-right: calc(104px + 200px);
+  padding-right: calc(104px);
+  h2{
+    width: 100%;
+  }
+}
+
+.players {
+  margin: 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.player {
+  display: flex;
+  gap: 16px;
+}
+
+.input {
+  border: 1px solid var(--Purple500);
+  border-radius: 12px;
+  padding: 12px;
+  width: 100%;
+}
