@@ -3,7 +3,7 @@ import s from "./stream.module.scss"
 
 export const StreamPage = () => {
   const initData = localStorage.getItem("streamData")
-  const [streamData, setStreamData] = useState<any>(JSON.parse(initData || "") || {
+  const [streamData, setStreamData] = useState<any>(JSON.parse(initData || "null") || {
     players: []
   })
 
@@ -24,24 +24,29 @@ export const StreamPage = () => {
   return (
     <main className={s.main}>
       <section className="_container">
-        <div className={s.title}>
-          <h2>
-            Players
-          </h2>
-          <h2>
-            Points
-          </h2>
-        </div>
-        <div className={s.players}>
-          {
-            streamData.players.map(({id, name, points}: any) => (
-              <div className={s.player} key={id}>
-                <div className={s.name}>{name}</div>
-                <div className={s.points}>{points}</div>
-              </div>
-            ))
-          }
-        </div>
+
+        {!streamData.players.length ? <h1>Waiting for start...</h1> :
+          <>
+            <div className={s.title}>
+              <h2>
+                Players
+              </h2>
+              <h2>
+                Points
+              </h2>
+            </div>
+            <div className={s.players}>
+              {
+                streamData.players.map(({id, name, points}: any) => (
+                  <div className={s.player} key={id}>
+                    <div className={s.name}>{name}</div>
+                    <div className={s.points}>{points}</div>
+                  </div>
+                ))
+              }
+            </div>
+          </>
+        }
       </section>
     </main>
   );

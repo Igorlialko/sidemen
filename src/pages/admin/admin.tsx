@@ -7,7 +7,8 @@ const initialId = Date.now();
 
 export const AdminPage = () => {
   const navigate = useNavigate();
-  const initStreamData = JSON.parse(localStorage.getItem("streamData") || "")
+  const initStreamData = JSON.parse(localStorage.getItem("streamData") || "null")
+
   const [playersValues, setPlayersValues] = useState<any>(initStreamData ?
     initStreamData.players.reduce((acc: any, el: any) => ({
       ...acc,
