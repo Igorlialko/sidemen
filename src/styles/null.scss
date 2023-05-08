@@ -44,7 +44,7 @@ body {
 
 html,
 body {
-  min-height: 100vh;
+  min-height: var(--app-height);
   min-width: var(--minWidth);
   font-size:var(--fontSize);
   line-height: var(--lineHeight);
@@ -97,4 +97,9 @@ h5,
 h6 {
   font-weight: inherit;
   font-size: inherit;
+}
+
+#root{
+  position: relative;
+  z-index: 1;
 }

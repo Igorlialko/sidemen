@@ -36,6 +36,20 @@
 body {
   width: 100vw;
   overflow-x: hidden;
+  //background: linear-gradient(116.59deg, #5E4474 0.89%, #5C05A6 50.45%, #C4A6DE 100%);
+  background: linear-gradient(185.59deg, #5E4474 -5.11%, #5C05A6 85.45%, #C4A6F7 145%);
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 64px;
+    width: calc(100% - 128px);
+    height: 100%;
+    background: url("../assets/image/chase.webp") no-repeat center/contain;
+  }
 }
 
 .button {
@@ -50,6 +64,7 @@ body {
   text-transform: uppercase;
   font-weight: 700;
   font-family: 'WorkSans';
+
   &:hover,
   &:focus-visible,
   &:active {

@@ -1,0 +1,16 @@
+**/node_modules/*
+dist
+coverage
+**/.next/*
+*.json
+*.lock
+*.css
+*.scss
+next-env.d.ts
+Cropper.tsx
+utils/
+
+.next/
+.storybook/
+storybook-static/
+other/
