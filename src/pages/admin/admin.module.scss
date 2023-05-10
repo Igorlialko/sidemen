@@ -1,7 +1,23 @@
+@import "src/styles/variables";
+
 .header {
   display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
+  .admin{
+    @include adaptiv-value('font-size', 70, 36);
+    @include adaptiv-value('line-height', 70, 36);
+  }
+}
+
+main,header {
+  color: white;
+  font-family: 'Montserrat';
+  font-weight: 700;
 }
 
 button.add {
@@ -28,18 +44,33 @@ button.delete {
     background: #c40000;
   }
 }
-button.disable{
+
+button.disable {
   cursor: default;
   pointer-events: none;
   opacity: 0.5;
 }
-.title{
+
+.h1{
+  @include adaptiv-value('font-size', 32, 24);
+  @include adaptiv-value('line-height', 32, 24);
+}
+
+.h2{
+  @include adaptiv-value('font-size', 24, 18);
+  @include adaptiv-value('line-height', 24, 18);
+}
+
+//============
+
+.title {
   margin-top: 16px;
   display: flex;
   justify-content: space-between;
   //padding-right: calc(104px + 200px);
   padding-right: calc(104px);
-  h2{
+
+  .h2 {
     width: 100%;
   }
 }

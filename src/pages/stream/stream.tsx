@@ -1,29 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import { IStreamData } from '../../types';
+import money from '../../assets/image/price.png';
 import s from './stream.module.scss';
+import { useGetStreamData } from './useGetStreamData';
 
 export const StreamPage = () => {
-  const [streamData, setStreamData] = useState<IStreamData>(
-    JSON.parse(localStorage.getItem('streamData') || 'null') || {
-      activeStep: 'step2',
-    }
-  );
-
-  useEffect(() => {
-    const updateStream = () => {
-      setStreamData((prev: any) => {
-        const data = localStorage.getItem('streamData');
-        if (data) {
-          return JSON.parse(data);
-        }
-        return prev;
-      });
-    };
-    window.addEventListener('storage', updateStream);
-    return () => window.removeEventListener('storage', updateStream);
-  }, []);
-
+  const streamData = useGetStreamData();
   /*---step1*/
   const name = 'Melnichenko';
   const count = '10';
@@ -64,10 +46,31 @@ export const StreamPage = () => {
               })}
             </div>
           )}
-          {streamData.activeStep === 'result' && <></>}
+          {streamData.activeStep === 'result' && (
+            <div className={s.cards}>
+              {Array.from({ length: 7 }, (_, index) => {
+                return (
+                  <div key={index} className={s.card}>
+                    <div className={s.name}>NameName NameNameNameName</div>
+                    <div className={s.price}>
+                      <span>{formatPrice(20000)}</span>
+                      <img src={money} alt='gold' />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
           <p className={s.subtitle}>the Chase by Salvation Youth</p>
         </div>
       </section>
     </main>
   );
+};
+
+export const formatPrice = (value: number) => {
+  const formatter = new Intl.NumberFormat('en-US', {
+    maximumFractionDigits: 0,
+  });
+  return formatter.format(value);
 };

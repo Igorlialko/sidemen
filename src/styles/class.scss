@@ -39,6 +39,7 @@ body {
   //background: linear-gradient(116.59deg, #5E4474 0.89%, #5C05A6 50.45%, #C4A6DE 100%);
   background: linear-gradient(185.59deg, #5E4474 -5.11%, #5C05A6 85.45%, #C4A6F7 145%);
   position: relative;
+  transition: all 200ms;
 
   &:before {
     content: '';
@@ -50,6 +51,10 @@ body {
     height: 100%;
     background: url("../assets/image/chase.webp") no-repeat center/contain;
   }
+
+  &.pre_start {
+    filter: blur(40px);
+  }
 }
 
 .button {
@@ -58,16 +63,25 @@ body {
   justify-content: center;
   padding: 20px;
   border: 1px solid var(--Purple500);
+  background: var(--Purple100);
   border-radius: 12px;
   cursor: pointer;
   transition: all 150ms;
   text-transform: uppercase;
   font-weight: 700;
-  font-family: 'WorkSans';
+  font-family: 'Montserrat';
 
   &:hover,
   &:focus-visible,
   &:active {
-    background: var(--Purple100);
+    background: initial;
+    color: #fff;
+    border: 1px solid #fff;
+  }
+  &.active{
+    pointer-events: none;
+    color: #fff;
+    border: 1px solid #fff;
+    background: #2f772f;
   }
 }
