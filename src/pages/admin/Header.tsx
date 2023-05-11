@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import s from './admin.module.scss';
 
-export const Header = () => {
+export const Header = ({ clearAllDates }: { clearAllDates: () => void }) => {
   const navigate = useNavigate();
 
   return (
@@ -24,6 +24,9 @@ export const Header = () => {
         <a className='button' href='/stream' target='_blank'>
           Open game in new tab
         </a>
+        <button className={`button ${s.delete}`} onClick={clearAllDates}>
+          Clear all data
+        </button>
       </nav>
     </header>
   );

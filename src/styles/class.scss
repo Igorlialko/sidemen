@@ -84,4 +84,8 @@ body {
     border: 1px solid #fff;
     background: #2f772f;
   }
+  &.disabled{
+    pointer-events: none;
+    opacity: 0.4;
+  }
 }

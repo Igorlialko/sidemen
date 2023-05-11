@@ -8,7 +8,9 @@ const Steps: TSteps[] = ['pre_start', 'start', 'step1', 'step2', 'result'];
 export const TriggerActiveStep = ({
   activeStep,
   setActiveStep,
+  activePlayerId,
 }: {
+  activePlayerId: number | string;
   activeStep: TSteps;
   setActiveStep: (step: TSteps) => void;
 }) => {
@@ -19,7 +21,9 @@ export const TriggerActiveStep = ({
           onClick={() => {
             setActiveStep(step);
           }}
-          className={`button ${step === activeStep ? 'active' : ''}`}
+          className={`button ${step === activeStep ? 'active' : ''} ${
+            !activePlayerId ? 'disabled' : ''
+          }`}
           key={step}
         >
           {step}

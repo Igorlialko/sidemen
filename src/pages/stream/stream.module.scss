@@ -74,6 +74,7 @@
       font-style: normal;
       font-weight: 800;
       display: flex;
+      justify-content: center;
       align-items: center;
       text-align: center;
       @include adaptiv-value('font-size', 230, 100);
@@ -81,6 +82,19 @@
       text-shadow: 10px 10px 15px var(--yellow);
       color: #FFFFFF;
       padding: 40px 60px;
+      .minutes{
+        display: flex;
+        @include adaptiv-value('min-width', 320, 130);
+      }
+      .points{
+        @include adaptiv-value('min-width', 40, 30);
+      }
+      .seconds{
+        display: flex;
+        justify-content: flex-end;
+        @include adaptiv-value('min-width', 320, 130);
+
+      }
     }
 
     @media(max-width: 767px) {
@@ -112,6 +126,7 @@
         display: flex;
         justify-content: center;
         color: white;
+        transition: all 300ms;
         @include adaptiv-value('font-size', 40, 20);
         @include adaptiv-value('line-height', 40, 20);
         @include adaptiv-value('padding', 10, 5);
@@ -140,7 +155,12 @@
         &.isPlayer {
           background: #300169;
         }
-
+        &.isGameOver {
+          background: #ff0000;
+        }
+        &.isWinner {
+          background: rgba(241, 185, 33, 1);
+        }
       }
     }
   }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { IPlayer } from '../../../types';
+import { IPlayer, TActivatedGold } from '../../../types';
 import s from '../admin.module.scss';
 
 export const Players = ({
@@ -8,12 +8,14 @@ export const Players = ({
   setPlayersValues,
   setPlayerName,
   playersValues,
-  setPlayerPoints,
   deletePlayersValues,
+  activePlayerId,
+  setActivePlayerId,
 }: {
   playersValues: {
     [activePlayerId: string | number]: IPlayer;
   };
+  activePlayerId: string | number;
   initialPlayers: any;
   setPlayersValues: ({
     playerId,
@@ -23,8 +25,8 @@ export const Players = ({
     playerObj: IPlayer;
   }) => void;
   setPlayerName: ({ playerId, name }: { playerId: number | string; name: string }) => void;
-  setPlayerPoints: ({ playerId, points }: { playerId: number | string; points: string }) => void;
   deletePlayersValues: ({ playerId }: { playerId: number | string }) => void;
+  setActivePlayerId: ({ playerId }: { playerId: number | string }) => void;
 }) => {
   const [players, setPlayers] = useState<{ id: string | number }[]>(initialPlayers);
   const addPlayer = () => {
@@ -34,8 +36,14 @@ export const Players = ({
       playerObj: {
         id: newId,
         name: '',
-        points: '0',
-        gold: '0',
+        points: 0,
+        expertPosition: 0,
+        position: 3,
+        gold: 0,
+        startGold: 100,
+        expertGoldPrev: 0,
+        expertGoldNext: 0,
+        activeGold: 'wait',
       },
     });
     setPlayers((prev) => [
@@ -45,15 +53,13 @@ export const Players = ({
       },
     ]);
   };
-  const updatePlayerValue = (id: string | number) => {
-    //===
-  };
+
   return (
     <>
       <p className={s.h1}>Create Players </p>
       <div className={s.title}>
         <p className={s.h2}>Name</p>
-        <p className={s.h2}>Points</p>
+        <p className={s.h2}>Gold</p>
       </div>
       <div className={s.players}>
         {players.map(({ id }) => (
@@ -63,17 +69,20 @@ export const Players = ({
             setName={(newName) => {
               setPlayerName({ playerId: id, name: newName });
             }}
-            points={playersValues[id]?.points || '0'}
-            setPoints={(newPoints) => {
-              setPlayerPoints({ playerId: id, points: newPoints });
-            }}
+            setActive={() => setActivePlayerId({ playerId: id })}
+            isActive={activePlayerId === id}
+            points={
+              playersValues[id].position === 7
+                ? playersValues[id].points *
+                  playersValues[id][playersValues[id].activeGold as TActivatedGold]
+                : 0
+            }
             onDelete={() => {
               setPlayers((prev) => prev.filter((el) => el.id !== id));
               deletePlayersValues({
                 playerId: id,
               });
             }}
-            onUpdate={() => updatePlayerValue(id)}
           />
         ))}
       </div>
@@ -89,18 +98,21 @@ const CreatePlayer = ({
   setName,
   name,
   points,
-  setPoints,
-  onUpdate,
+  isActive,
+  setActive,
 }: {
   name: string;
-  points: string;
+  points: number;
   setName: (newName: string) => void;
-  setPoints: (newName: string) => void;
+  setActive: () => void;
   onDelete: () => void;
-  onUpdate: () => void;
+  isActive: boolean;
 }) => {
   return (
     <div className={s.player}>
+      <button className={`button ${isActive ? 'active' : ''}`} onClick={setActive}>
+        Active
+      </button>
       <input
         type='text'
         placeholder='Please enter name'
@@ -112,13 +124,12 @@ const CreatePlayer = ({
         type='text'
         placeholder='Please enter points'
         value={points}
-        onChange={(e) => setPoints(e.currentTarget.value)}
+        disabled
         className={s.input}
       />
       <button className={`button ${s.delete}`} onClick={onDelete}>
         Delete
       </button>
-      {/*<button className="button" style={{minWidth: 200}} onClick={onUpdate}>Update in game</button>*/}
     </div>
   );
 };

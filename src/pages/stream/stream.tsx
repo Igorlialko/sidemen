@@ -1,16 +1,14 @@
 import React from 'react';
 
 import money from '../../assets/image/price.png';
+import { TActivatedGold } from '../../types';
 import s from './stream.module.scss';
 import { useGetStreamData } from './useGetStreamData';
+import { useTimer } from './useTimer';
 
 export const StreamPage = () => {
   const streamData = useGetStreamData();
-  /*---step1*/
-  const name = 'Melnichenko';
-  const count = '10';
-  const time = '01:00';
-  /*---*/
+  const time = useTimer(streamData);
 
   return (
     <main className={s.main}>
@@ -24,23 +22,103 @@ export const StreamPage = () => {
           {streamData.activeStep === 'step1' && (
             <>
               <div className={s.player}>
-                <p>{name}</p>
-                <p>{count}</p>
+                <p>{streamData.players[streamData.activePlayerId].name}</p>
+                <p>{streamData.players[streamData.activePlayerId].points}</p>
               </div>
-              <div className={s.timer}>{time}</div>
+              <div className={s.timer}>
+                <div className={s.minutes}>{time.mm}</div>
+                <div className={s.points}>:</div>
+                <div className={s.seconds}>{time.ss}</div>
+              </div>
             </>
           )}
           {streamData.activeStep === 'step2' && (
             <div className={s.road}>
               {Array.from({ length: 7 }, (_, index) => {
-                const isRed = false;
-                const isPlayer = false;
+                let isRed = false;
+                let isPlayer = false;
+                let isGameOver = false;
+                let isWinner = false;
+                let text = '';
+                if (index === 0) {
+                  text = '🥴';
+                }
+                if (index === 1) {
+                  text = ' 🤪';
+                }
+                if (index === 2) {
+                  text = ' 😋';
+                }
+                if (index === 3) {
+                  text = '😜';
+                }
+                if (index === 4) {
+                  text = '🥸';
+                }
+                if (index === 5) {
+                  text = '🤩';
+                }
+                if (index === 6) {
+                  text = '🥳';
+                }
+                if (streamData.players[streamData.activePlayerId].activeGold === 'wait') {
+                  if (index === 1) {
+                    text = `${
+                      streamData.players[streamData.activePlayerId].expertGoldPrev *
+                      streamData.players[streamData.activePlayerId].points
+                    }`;
+                  }
+                  if (index === 2) {
+                    text = `${
+                      streamData.players[streamData.activePlayerId].startGold *
+                      streamData.players[streamData.activePlayerId].points
+                    }`;
+                  }
+                  if (index === 3) {
+                    text = `${
+                      streamData.players[streamData.activePlayerId].expertGoldNext *
+                      streamData.players[streamData.activePlayerId].points
+                    }`;
+                  }
+                } else {
+                  if (index === streamData.players[streamData.activePlayerId].position - 1) {
+                    text = `${
+                      //@ts-ignore
+                      streamData.players[streamData.activePlayerId][
+                        streamData.players[streamData.activePlayerId].activeGold
+                      ] * streamData.players[streamData.activePlayerId].points
+                    }`;
+                    isPlayer = true;
+                  }
+                  if (index <= streamData.players[streamData.activePlayerId].expertPosition - 1) {
+                    isRed = true;
+                    text = '😎';
+                  }
+                  if (streamData.players[streamData.activePlayerId].position === 7) {
+                    isRed = false;
+                    isPlayer = false;
+                    isWinner = true;
+                    text = '🏆';
+                  }
+                  if (
+                    streamData.players[streamData.activePlayerId].expertPosition ===
+                    streamData.players[streamData.activePlayerId].position
+                  ) {
+                    isRed = false;
+                    isPlayer = false;
+                    isGameOver = true;
+                    text = '😵';
+                  }
+                }
+
                 return (
                   <div
-                    className={`${isRed ? s.red : ''} ${isPlayer ? s.isPlayer : ''}`}
+                    className={`${isRed ? s.red : ''} ${isPlayer ? s.isPlayer : ''} ${
+                      isWinner ? s.isWinner : ''
+                    } ${isGameOver ? s.isGameOver : ''}`}
                     key={index}
                   >
-                    sdc
+                    {text}
                   </div>
                 );
               })}
@@ -48,17 +126,21 @@ export const StreamPage = () => {
           )}
           {streamData.activeStep === 'result' && (
             <div className={s.cards}>
-              {Array.from({ length: 7 }, (_, index) => {
-                return (
-                  <div key={index} className={s.card}>
-                    <div className={s.name}>NameName NameNameNameName</div>
+              {Object.values(streamData.players)
+                .sort((a, b) => {
+                  a.gold = a.position === 7 ? a.points * a[a.activeGold as TActivatedGold] : 0;
+                  b.gold = b.position === 7 ? b.points * b[b.activeGold as TActivatedGold] : 0;
+                  return b.gold - a.gold;
+                })
+                .map((el) => (
+                  <div key={el.id} className={s.card}>
+                    <div className={s.name}>{el.name}</div>
                     <div className={s.price}>
-                      <span>{formatPrice(20000)}</span>
+                      <span>{formatPrice(el.gold)}</span>
                       <img src={money} alt='gold' />
                     </div>
                   </div>
-                );
-              })}
+                ))}
             </div>
           )}
           <p className={s.subtitle}>the Chase by Salvation Youth</p>
