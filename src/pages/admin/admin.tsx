@@ -28,8 +28,7 @@ export const AdminPage = () => {
         return JSON.stringify(initStreamData) === JSON.stringify(streamData);
       })()
     : false;
-  console.log('initStreamData', initStreamData);
-  console.log('streamData', streamData);
+
   return (
     <>
       <Header clearAllDates={clearAllDates} />
