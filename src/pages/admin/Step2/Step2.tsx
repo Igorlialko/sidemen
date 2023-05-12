@@ -126,7 +126,7 @@ export const Step2 = ({
           </button>
           <div className={s.activeCount}>{activePlayer.expertPosition}</div>
           <button
-            className={`button ${activePlayer.expertPosition >= 7 ? 'disabled' : ''}`}
+            className={`button ${activePlayer.expertPosition >= 8 ? 'disabled' : ''}`}
             onClick={setNextExpertPosition}
           >
             +
@@ -145,7 +145,7 @@ export const Step2 = ({
           </button>
           <div className={s.activeCount}>{activePlayer.position}</div>
           <button
-            className={`button ${activePlayer.position >= 7 ? 'disabled' : ''}`}
+            className={`button ${activePlayer.position >= 8 ? 'disabled' : ''}`}
             onClick={setNextActivePlayerPosition}
           >
             +

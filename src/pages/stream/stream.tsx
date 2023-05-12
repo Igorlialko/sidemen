@@ -94,7 +94,7 @@ export const StreamPage = () => {
                     isRed = true;
                     text = '😎';
                   }
-                  if (streamData.players[streamData.activePlayerId].position === 7) {
+                  if (streamData.players[streamData.activePlayerId].position === 8) {
                     isRed = false;
                     isPlayer = false;
                     isWinner = true;
