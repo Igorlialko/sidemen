@@ -45,9 +45,7 @@ export const Step2 = ({
             className={s.input}
           />
           <div className={s.counter}>
-            <div className={s.activeCount}>{`Результат: ${
-              activePlayer.expertGoldPrev * activePlayer.points
-            }`}</div>
+            <div className={s.activeCount}>{`Результат: ${activePlayer.expertGoldPrev}`}</div>
             <img src={money} alt='gold' />
             <button
               className={`button ${activePlayer.activeGold === 'expertGoldPrev' ? 'active' : ''}`}
@@ -99,9 +97,7 @@ export const Step2 = ({
             className={s.input}
           />
           <div className={s.counter}>
-            <div className={s.activeCount}>{`Результат: ${
-              activePlayer.expertGoldNext * activePlayer.points
-            }`}</div>
+            <div className={s.activeCount}>{`Результат: ${activePlayer.expertGoldNext}`}</div>
             <img src={money} alt='gold' />
             <button
               className={`button ${activePlayer.activeGold === 'expertGoldNext' ? 'active' : ''}`}

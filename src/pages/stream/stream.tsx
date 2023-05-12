@@ -63,10 +63,7 @@ export const StreamPage = () => {
                 }
                 if (streamData.players[streamData.activePlayerId].activeGold === 'wait') {
                   if (index === 1) {
-                    text = `${
-                      streamData.players[streamData.activePlayerId].expertGoldPrev *
-                      streamData.players[streamData.activePlayerId].points
-                    }`;
+                    text = `${streamData.players[streamData.activePlayerId].expertGoldPrev}`;
                   }
                   if (index === 2) {
                     text = `${
@@ -75,10 +72,7 @@ export const StreamPage = () => {
                     }`;
                   }
                   if (index === 3) {
-                    text = `${
-                      streamData.players[streamData.activePlayerId].expertGoldNext *
-                      streamData.players[streamData.activePlayerId].points
-                    }`;
+                    text = `${streamData.players[streamData.activePlayerId].expertGoldNext}`;
                   }
                 } else {
                   if (index === streamData.players[streamData.activePlayerId].position - 1) {
