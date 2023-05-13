@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { IPlayer, TActivatedGold } from '../../../types';
+import { getGold } from '../../../utils';
 import s from '../admin.module.scss';
 
 export const Players = ({
@@ -71,12 +72,7 @@ export const Players = ({
             }}
             setActive={() => setActivePlayerId({ playerId: id })}
             isActive={activePlayerId === id}
-            points={
-              playersValues[id].position === 7
-                ? playersValues[id].points *
-                  playersValues[id][playersValues[id].activeGold as TActivatedGold]
-                : 0
-            }
+            golds={getGold(playersValues[id])}
             onDelete={() => {
               setPlayers((prev) => prev.filter((el) => el.id !== id));
               deletePlayersValues({
@@ -97,12 +93,12 @@ const CreatePlayer = ({
   onDelete,
   setName,
   name,
-  points,
+  golds,
   isActive,
   setActive,
 }: {
   name: string;
-  points: number;
+  golds: number;
   setName: (newName: string) => void;
   setActive: () => void;
   onDelete: () => void;
@@ -123,7 +119,7 @@ const CreatePlayer = ({
       <input
         type='text'
         placeholder='Please enter points'
-        value={points}
+        value={golds}
         disabled
         className={s.input}
       />

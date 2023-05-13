@@ -2,6 +2,7 @@ import React from 'react';
 
 import money from '../../assets/image/price.png';
 import { TActivatedGold } from '../../types';
+import { getGold, getScore } from '../../utils';
 import s from './stream.module.scss';
 import { useGetStreamData } from './useGetStreamData';
 import { useTimer } from './useTimer';
@@ -76,12 +77,7 @@ export const StreamPage = () => {
                   }
                 } else {
                   if (index === streamData.players[streamData.activePlayerId].position - 1) {
-                    text = `${
-                      //@ts-ignore
-                      streamData.players[streamData.activePlayerId][
-                        streamData.players[streamData.activePlayerId].activeGold
-                      ] * streamData.players[streamData.activePlayerId].points
-                    }`;
+                    text = `${getScore(streamData.players[streamData.activePlayerId])}`;
                     isPlayer = true;
                   }
                   if (index <= streamData.players[streamData.activePlayerId].expertPosition - 1) {
@@ -122,8 +118,8 @@ export const StreamPage = () => {
             <div className={s.cards}>
               {Object.values(streamData.players)
                 .sort((a, b) => {
-                  a.gold = a.position === 7 ? a.points * a[a.activeGold as TActivatedGold] : 0;
-                  b.gold = b.position === 7 ? b.points * b[b.activeGold as TActivatedGold] : 0;
+                  a.gold = getGold(a);
+                  b.gold = getGold(b);
                   return b.gold - a.gold;
                 })
                 .map((el) => (

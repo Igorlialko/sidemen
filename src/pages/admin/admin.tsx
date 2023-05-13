@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { IStreamData, TSteps } from '../../types';
 import { getStreamData } from '../../utils';
@@ -28,6 +28,22 @@ export const AdminPage = () => {
         return JSON.stringify(initStreamData) === JSON.stringify(streamData);
       })()
     : false;
+
+  useEffect(() => {
+    const addHotKeys = (event: KeyboardEvent) => {
+      if (event.code === 'KeyS' && event.altKey) {
+        setStreamData((prev) => {
+          localStorage.setItem('streamData', JSON.stringify(prev));
+          return prev;
+        });
+        rerender((prev) => !prev);
+      }
+    };
+    document.addEventListener('keydown', addHotKeys);
+    return () => {
+      document.removeEventListener('keydown', addHotKeys);
+    };
+  }, []);
 
   return (
     <>
