@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 
 import { IStreamData } from '../../types';
 import { Header } from './Header';
@@ -13,7 +13,6 @@ export const AdminPage = () => {
   const initStreamData: IStreamData = JSON.parse(localStorage.getItem('streamData') || 'null');
   const {
     streamData,
-    isRendered,
     updateValues,
     clearAllDates,
     setActiveStep,
@@ -37,13 +36,11 @@ export const AdminPage = () => {
     setActivePlayerId,
   } = useStore();
 
-  const isDisableSave = useMemo(() => {
-    return initStreamData
-      ? (() => {
-          return JSON.stringify(initStreamData) === JSON.stringify(streamData);
-        })()
-      : false;
-  }, [streamData, isRendered]);
+  const isDisableSave = initStreamData
+    ? (() => {
+        return JSON.stringify(initStreamData) === JSON.stringify(streamData);
+      })()
+    : false;
 
   useEffect(() => {
     const addHotKeys = (event: KeyboardEvent) => {

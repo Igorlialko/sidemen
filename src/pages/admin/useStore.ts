@@ -5,7 +5,7 @@ import { getStreamData } from '../../utils';
 
 export const useStore = () => {
   const [streamData, setStreamData] = useState<IStreamData>(getStreamData());
-  const [isRendered, rerender] = useState(false);
+  const [_, rerender] = useState(false);
 
   const setter = useMemo(
     () => ({
@@ -217,5 +217,5 @@ export const useStore = () => {
     []
   );
 
-  return { streamData, isRendered, ...setter };
+  return { streamData, ...setter };
 };
